@@ -8,7 +8,7 @@ Executar os testes a partir do <b>diretório test - pacote com.texoit.avaliacao<
 
 Para acessar a documentação da <b>API REST</b>, acessar: <b>http://localhost:8080/swagger-ui.html </b>
 
-* O dataset original é carregado automaticamente e pode ser substituído, mantendo o mesmo nome do arquivo "movielist.csv", ou alterando o caminho na consulta SQL (arquivo data.sql).
+* O dataset original é carregado automaticamente na base de dados (H2) e pode ser substituído, mantendo o mesmo nome do arquivo "movielist.csv", ou alterando o caminho na consulta SQL (arquivo data.sql).
 
 ## Especificação do Teste
 
