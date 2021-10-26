@@ -110,4 +110,14 @@ public class FilmeConcurso {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "FilmeConcurso{" +
+				", numeroAnoEvento=" + numeroAnoEvento +
+				", nomeFilme='" + nomeFilme + '\'' +
+				", nomeEstudio='" + nomeEstudio + '\'' +
+				", nomeProdutor='" + nomeProdutor + '\'' +
+				", vencedor=" + vencedor +
+				'}';
+	}
 }

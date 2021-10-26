@@ -36,7 +36,7 @@ public class PremiosApiController {
 		return FilmeConcursoDto.converterParaDto(lista);
 	}
 
-	@GetMapping("produtoresMaisPremiados")
+	@GetMapping("produtoresMaisPremiadosPorIntervalo")
 	public IntervaloRepeticaoPremioDto listaProdutoresMaisPremiadosPorIntervalo() {
 
 		List<FilmeConcurso> lista = filmeConcursoRepository.recuperarMaisPremiados();
@@ -92,25 +92,31 @@ public class PremiosApiController {
 		Long anoEvento = 0L;
 		String nomeProdutor = null;
 		int intervaloPremio = 0;
-		int count = 1;
+		int countRepeticaoPremiacao = 1;
 		List<ProdutorPremiadoDto> listaIntervalos = new ArrayList<>();
 		for (FilmeConcurso item:lista) {
-			if(count == 1){
+			if(countRepeticaoPremiacao == 1){
 				anoEvento = item.getNumeroAnoEvento();
 				nomeProdutor = item.getNomeProdutor();
 			}
-			if(count % 2 == 0){
-				intervaloPremio = anoEvento.intValue() - item.getNumeroAnoEvento().intValue();
-				ProdutorPremiadoDto produtorPremiado = new ProdutorPremiadoDto();
-				produtorPremiado.setAnoVitoriaAnterior(item.getNumeroAnoEvento());
-				produtorPremiado.setAnoVitoriaSeguinte(anoEvento);
-				produtorPremiado.setNomeProdutor(nomeProdutor);
-				produtorPremiado.setIntervaloPremiacao(intervaloPremio);
-				listaIntervalos.add(produtorPremiado);
+			if(countRepeticaoPremiacao % 2 == 0){
+				if(nomeProdutor.equals(item.getNomeProdutor())){
+					intervaloPremio = anoEvento.intValue() - item.getNumeroAnoEvento().intValue();
+					ProdutorPremiadoDto produtorPremiado = new ProdutorPremiadoDto();
+					produtorPremiado.setAnoVitoriaAnterior(item.getNumeroAnoEvento());
+					produtorPremiado.setAnoVitoriaSeguinte(anoEvento);
+					produtorPremiado.setNomeProdutor(nomeProdutor);
+					produtorPremiado.setIntervaloPremiacao(intervaloPremio);
+					listaIntervalos.add(produtorPremiado);
+					countRepeticaoPremiacao = 0;
+				}
+			}
+			if(nomeProdutor.equals(item.getNomeProdutor())){
+				countRepeticaoPremiacao++;
 			}
 			nomeProdutor = item.getNomeProdutor();
 			anoEvento = item.getNumeroAnoEvento();
-			count++;
+
 		}
 		return listaIntervalos;
 	}

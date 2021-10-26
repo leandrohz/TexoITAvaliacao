@@ -10,7 +10,7 @@ public interface FilmeConcursoRepository extends JpaRepository<FilmeConcurso, In
 	@Query("SELECT t from FilmeConcurso t where LOWER(t.nomeFilme) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	List<FilmeConcurso> findByNomeFilme(String nomeFilme);
 
-	@Query("SELECT filmeConcurso FROM FilmeConcurso filmeConcurso WHERE filmeConcurso.nomeProdutor IN (SELECT t.nomeProdutor FROM FilmeConcurso t WHERE t.vencedor IS TRUE GROUP BY t.nomeProdutor HAVING MOD(COUNT(t.nomeProdutor),2) = 0) ORDER BY filmeConcurso.nomeProdutor, filmeConcurso.numeroAnoEvento DESC")
+	@Query("SELECT filmeConcurso FROM FilmeConcurso filmeConcurso WHERE filmeConcurso.vencedor IS TRUE AND filmeConcurso.nomeProdutor IN (SELECT t.nomeProdutor FROM FilmeConcurso t WHERE t.vencedor IS TRUE GROUP BY t.nomeProdutor HAVING MOD(COUNT(t.nomeProdutor),2) = 0) ORDER BY filmeConcurso.nomeProdutor, filmeConcurso.numeroAnoEvento DESC")
 	List<FilmeConcurso> recuperarMaisPremiados();
 
 }
